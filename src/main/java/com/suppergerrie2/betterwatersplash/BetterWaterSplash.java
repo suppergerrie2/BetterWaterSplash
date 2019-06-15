@@ -10,20 +10,16 @@ import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod(
-    modid = BetterWaterSplash.MOD_ID,
-    name = BetterWaterSplash.MOD_NAME,
-    version = BetterWaterSplash.VERSION
+    BetterWaterSplash.MOD_ID
 )
 @Mod.EventBusSubscriber(modid = BetterWaterSplash.MOD_ID)
 public class BetterWaterSplash {
 
     public static final String MOD_ID = "sbetterwatersplash";
-    public static final String MOD_NAME = "BetterWaterSplash";
-    public static final String VERSION = "1.0";
 
     @SubscribeEvent
     public static void onProjectileImpactEvent(ProjectileImpactEvent.Throwable event) {
@@ -42,7 +38,7 @@ public class BetterWaterSplash {
             return;
         }
 
-        AxisAlignedBB axisalignedbb = potionEntity.getEntityBoundingBox().grow(4.0D, 2.0D, 4.0D);
+        AxisAlignedBB axisalignedbb = potionEntity.getBoundingBox().grow(4.0D, 2.0D, 4.0D);
         List<EntityLivingBase> entitiesWithinRange = potionEntity.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
 
         if (!entitiesWithinRange.isEmpty()) {
