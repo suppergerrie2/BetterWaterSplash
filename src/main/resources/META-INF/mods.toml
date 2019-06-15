@@ -1,11 +1,11 @@
 modLoader="javafml" #mandatory
-loaderVersion="[25,)" #mandatory
+loaderVersion="[26,)" #mandatory
 displayURL="https://suppergerrie2.com" #optional
 credits="The forge team for updating forge to 1.13.2!" #optional
 authors="suppergerrie2" #optional
 
 [[mods]] #mandatory
 modId="sbetterwatersplash" #mandatory
-version="2.0" #mandatory
+version="3.0" #mandatory
 displayName="Better Water Splash" #mandatory
 description='''This is a mod that makes water splash potions put out mobs that are on fire'''
