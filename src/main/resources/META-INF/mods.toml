@@ -1,11 +1,12 @@
 modLoader="javafml"
-loaderVersion="[26,)" #Mod has been tested on forge 26 till 28
+loaderVersion="[32,)"
 displayURL="https://suppergerrie2.com"
 credits="The forge team for making forge!"
 authors="suppergerrie2"
+license="GNU General Public License v3.0"
 
 [[mods]]
 modId="sbetterwatersplash"
-version="3.1"
+version="${file.jarVersion}"
 displayName="Better Water Splash"
 description='''This is a mod that makes water splash potions put out mobs that are on fire'''
