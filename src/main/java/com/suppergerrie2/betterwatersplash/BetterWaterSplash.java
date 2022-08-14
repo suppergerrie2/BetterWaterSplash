@@ -8,7 +8,10 @@ import net.minecraft.world.item.alchemy.*;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import java.util.List;
 
@@ -18,10 +21,17 @@ public class BetterWaterSplash {
 
     public static final String MOD_ID = "sbetterwatersplash";
 
+    public BetterWaterSplash() {
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, BetterWaterSplashConfig.serverSpec);
+        FMLJavaModLoadingContext.get().getModEventBus().register(BetterWaterSplashConfig.class);
+    }
+
     @SubscribeEvent
     public static void onProjectileImpactEvent(ProjectileImpactEvent event) {
         //We only want to know when a potion impacts something, not arrows or other entities.
-        if (event.getProjectile().level.isClientSide() || !(event.getProjectile() instanceof ThrownPotion potionEntity)) {
+        if (event.getProjectile().level.isClientSide()
+                || !BetterWaterSplashConfig.SERVER_CONFIG.isDimensionAllowed(event.getProjectile().level.dimension())
+                || !(event.getProjectile() instanceof ThrownPotion potionEntity)) {
             return;
         }
 
