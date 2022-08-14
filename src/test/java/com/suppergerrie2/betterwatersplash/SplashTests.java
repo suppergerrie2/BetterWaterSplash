@@ -17,6 +17,48 @@ public class SplashTests {
     @GameTest(template = "splash_water_extinguishes_fire")
     @PrefixGameTestTemplate(false)
     public static void splashWaterExtinguishesFire(GameTestHelper gameTestHelper) {
+        testSplashWaterExtinguishesFire(gameTestHelper);
+    }
+
+    @GameTest(template = "lingering_water_extinguishes_fire")
+    @PrefixGameTestTemplate(false)
+    public static void lingeringWaterExtinguishesFire(GameTestHelper gameTestHelper) {
+        testSplashWaterExtinguishesFire(gameTestHelper);
+    }
+
+    @GameTest(template = "normal_potion_does_not_extinguish_fire")
+    @PrefixGameTestTemplate(false)
+    public static void potionWithEffectDoesNotExtinguishFire(GameTestHelper gameTestHelper) {
+        Pig pig = gameTestHelper.spawn(EntityType.PIG, 1.5f, 2, 1.5f);
+
+        gameTestHelper.setBlock(1, 2, 1, Blocks.FIRE);
+        gameTestHelper.setBlock(1, 2, 2, Blocks.FIRE);
+        gameTestHelper.setBlock(2, 2, 1, Blocks.FIRE);
+        gameTestHelper.setBlock(2, 2, 2, Blocks.FIRE);
+
+        gameTestHelper.runAfterDelay(10, () -> {
+            gameTestHelper.setBlock(1, 2, 1, Blocks.AIR);
+            gameTestHelper.setBlock(1, 2, 2, Blocks.AIR);
+            gameTestHelper.setBlock(2, 2, 1, Blocks.AIR);
+            gameTestHelper.setBlock(2, 2, 2, Blocks.AIR);
+
+            if (!pig.isOnFire()) {
+                throw new GameTestAssertPosException("Pig should be on fire", pig.blockPosition(), gameTestHelper.relativePos(pig.blockPosition()), gameTestHelper.getTick());
+            }
+
+            gameTestHelper.pulseRedstone(new BlockPos(1, 4, 2), 5);
+
+            gameTestHelper.runAfterDelay(10, () -> {
+                if (!pig.isOnFire()) {
+                    throw new GameTestAssertPosException("Pig should still be on fire", pig.blockPosition(), gameTestHelper.relativePos(pig.blockPosition()), gameTestHelper.getTick());
+                }
+
+                gameTestHelper.succeed();
+            });
+        });
+    }
+
+    public static void testSplashWaterExtinguishesFire(GameTestHelper gameTestHelper) {
         Pig pig = gameTestHelper.spawn(EntityType.PIG, 1.5f, 2, 1.5f);
 
         gameTestHelper.setBlock(1, 2, 1, Blocks.FIRE);
